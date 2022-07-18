@@ -38,17 +38,12 @@ switch (carrito) {
         alert("Tu saldo a pagar fianl es de $ " + pelotas_con_dto_con_iva);
         break;
     default:
-        alert("No elegiste ningún producto");
-        prompt("Qué productos vas a llevar? \n 1- Juego de Encastre \n 2- Muñeca Super Cute \n 3- Auto Paw Patrol \n 4- Pelota infantil");
-        do {
-            switch (carrito) {
-                
-            }
-        } while (carrito != ( "1" || "2" || "3" ||"4" ));
+        alert("No elegiste ningún producto. Actualizá la página para volver a intentarlo.");
+        
         break;
 }
 
-/* let confirmacion = prompt ("Confirma la compra?"); */
+
 let confirmacion = prompt ("Confirma la compra?")
 
 if (confirmacion == "si") {
