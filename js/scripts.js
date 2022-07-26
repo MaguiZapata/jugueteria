@@ -1,72 +1,96 @@
-const encastre_coco = 1000;
-const munieca = 8500;
-const auto_pp = 6500;
-const pelotas = 2300;
-const iva = x => x * 0.21;
-const descuento = y => y * 0.15;
-let saldocondto = 0;
-const suma = (a, b) => a + b;
-const resta = (a, b) => a - b;
+class Producto {
+    constructor(nombre, precio, id) {
+        this.nombre = nombre;
+        this.precio = precio;
+        this.id= id;
 
+    }
+    conDescuento() {
+        this.precio = this.precio - this.precio * 0.15
+        return this.precio
+    }
 
-let carrito = prompt("Qué productos vas a llevar? \n 1- Juego de Encastre \n 2- Muñeca Super Cute \n 3- Auto Paw Patrol \n 4- Pelota infantil");
-
-
-
-
-switch (carrito) {
-    case "1":
-        let encastre_con_descuento = (resta(encastre_coco, descuento(encastre_coco)));
-        alert("Tu saldo a pagar con descuento antes de iva es de $ " + encastre_con_descuento);
-        let encastre_con_dto_con_iva = (suma(encastre_con_descuento, iva(encastre_con_descuento)));
-        alert("Tu saldo a pagar final es de $ " + encastre_con_dto_con_iva);
-        break;
-    case "2":
-        let munieca_con_descuento = (resta(munieca, descuento(munieca)));
-        alert("Tu saldo a pagar con descuento antes de iva es de $ " + munieca_con_descuento);
-        let munieca_con_dto_con_iva = (suma(munieca_con_descuento, iva(munieca_con_descuento)));
-        alert("Tu saldo a pagar final es de $ " + munieca_con_dto_con_iva);
-        break;
-    case "3":
-        let auto_pp_con_descuento = (resta(auto_pp, descuento(auto_pp)));
-        alert("Tu saldo a pagar con descuento antes de iva es de $ " + auto_pp_con_descuento);
-        let auto_pp_con_dto_con_iva = (suma(auto_pp_con_descuento, iva(auto_pp_con_descuento)));
-        alert("Tu saldo a pagar final es de $ " + auto_pp_con_dto_con_iva);
-        break;
-
-    case "4":
-        let pelotas_con_descuento = (resta(pelotas, descuento(pelotas)));
-        alert("Tu saldo a pagar con descuento antes de iva es de $ " + pelotas_con_descuento);
-        let pelotas_con_dto_con_iva = (suma(pelotas_con_descuento, iva(pelotas_con_descuento)));
-        alert("Tu saldo a pagar final es de $ " + pelotas_con_dto_con_iva);
-        break;
-    default:
-        alert("No elegiste ningún producto. Actualizá la página para volver a intentarlo.");
-
-        break;
 }
 
+const productos = [];
+productos.push(new Producto("encastre_coco", 1000,0));
+productos.push(new Producto("munieca", 8500,1));
+productos.push(new Producto("auto_pp", 6500,2));
+productos.push(new Producto("pelota", 2300,3))
+const carrito = []
+let total = 0;
 
-let confirmacion = prompt("Confirma la compra?")
+function totalizar() {
+    for (let index = 0; index < carrito.length; index++) {
+        total = total + carrito[index].precio
+    }
+}
 
-if (confirmacion == "si") {
-    alert("Muchas gracias por su compra");
-} else if (confirmacion == "no") {
-    alert("Lo esperamos en otra oportunidad, gracias!");
+function agregarCarrito(p) {
+    carrito.push(p)
+}
 
-} else {
+function seguircomprando() {
+    let confirmacion = prompt("Qué desea hacer: \n1- Seguir comprando \n 2- Finalizar compra")
+    if (confirmacion == "1") {
+        seleccionprod()
+
+
+    } else if (confirmacion == "2") {
+        alert("El total a pagar es $" + total +". Muchas gracias por su compra");
+
+    }
+     else {
 
     do {
-        alert("Ingreso incorrecto, debe ingresar si o no");
-        confirmacion = prompt("Confirma la compra?");
-        if (confirmacion == "si") {
-            alert("Muchas gracias por su compra");
-        } else if (confirmacion == "no") {
-            alert("Lo esperamos en otra oportunidad, gracias!");
-            break;
+        alert("Ingreso incorrecto");
+        confirmacion = prompt("Qué desea hacer: \n1- Seguir comprando? \n 2- Finalizar compra \n 3- Abandonar compra");
+        if (confirmacion == "1") {
+            seleccionprod(); 
+        } else if(confirmacion == "2") {
+            alert("El total a pagar es $" + total +". Muchas gracias por su compra");
+          
 
-        };
-        break;
+        } 
+        
 
-    } while (confirmacion != ("si" || "no"));
+    } while (confirmacion != "1" && confirmacion!="2");
+} 
 }
+
+function infoCompra(id) {
+    let prod = productos.find(item => item.id === id);
+    alert("El precio de " + prod.nombre + " con descuento es de $ " + prod.conDescuento());
+    agregarCarrito(prod);
+    totalizar()
+    seguircomprando()
+}
+
+function seleccionprod() {
+    let compra = prompt("Qué productos vas a llevar? \n 0- Juego de Encastre \n 1- Muñeca Super Cute \n 2- Auto Paw Patrol \n 3- Pelota infantil");
+
+    switch (compra) {
+        case "0":
+            infoCompra(0)
+
+            break;
+        case "1":
+            infoCompra(1)
+            break;
+        case "2":
+            infoCompra(2)
+            break;
+        case "3":
+            infoCompra(3)
+            break;
+        default:
+            alert("No elegiste ningún producto. Actualizá la página para volver a intentarlo.");
+            break;
+    }
+
+}
+
+seleccionprod()
+
+
+
