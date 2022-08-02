@@ -37,8 +37,12 @@ function seguircomprando() {
 
 
     } else if (confirmacion == "2") {
-        alert("El total a pagar es $" + total +". Muchas gracias por su compra");
-
+        /* alert("El total a pagar es $" + total +". Muchas gracias por su compra") */;
+        
+        let cuerpo = document.getElementById ("cuerpo")
+        
+        cuerpo.innerHTML = `<h2>El total a pagar es $  ${ total}. Muchas gracias por su compra</h2>` 
+ 
     }
      else {
 
@@ -48,8 +52,8 @@ function seguircomprando() {
         if (confirmacion == "1") {
             seleccionprod(); 
         } else if(confirmacion == "2") {
-            alert("El total a pagar es $" + total +". Muchas gracias por su compra");
-          
+            /* alert("El total a pagar es $" + total +". Muchas gracias por su compra"); */
+            cuerpo.innerHTML = `<h2>El total a pagar es $  ${ total}. Muchas gracias por su compra</h2>` 
 
         } 
         
@@ -84,7 +88,8 @@ function seleccionprod() {
             infoCompra(3)
             break;
         default:
-            alert("No elegiste ningún producto. Actualizá la página para volver a intentarlo.");
+            cuerpo.innerHTML = `<h2>No elegiste ningún producto. Actualizá la página para volver a intentarlo.</h2>`
+            
             break;
     }
 
