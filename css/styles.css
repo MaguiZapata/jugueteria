@@ -33,5 +33,18 @@ section {
     display: flex;
     flex-direction: row;
     gap: 2%;
+    
     justify-content: center;
+
+}
+.resumen {
+    padding-left: 40%;
+    padding-right: 8%;
+}
+.total  {
+    font-size: 150%;
+    text-align: right;
+}
+.imgtabla{
+    width: 50px;
 }
