@@ -29,21 +29,28 @@ for (let i = 0; i < productos.length; i++) {
                     <h5 class="card-title">${element.nombre}</h5>
                     <p class="card-text"><small class="text-muted"> $ ${element.precio}</small></p>
                     </div>
-                    <a href="#" id = "${element.id}" class="btn btn-primary">Agregar al carrito</a>
+                    <a href="#" id = "${element.id}" class="btn btn-primary agregar">Agregar al carrito</a>
                     </div>`;
     stringresp = stringresp + tarjeta
 }
 galeria.innerHTML = stringresp
 
-const carrito = []
-let total = 0;
-let totalTabla = document.getElementById("total")
-function totalizar() {
-    for (let index = 0; index < carrito.length; index++) {
-        total = total + carrito[index].precio;
+let btnagregar = document.getElementsByClassName ("agregar")
 
+const carrito = []
+
+
+
+let totalTabla = document.getElementById("total")
+
+function totalizar() {
+    let total=0
+    for (let index = 0; index < carrito.length; index++) {
+
+        total = total + carrito[index].precio;
     }
-totalTabla.innerText=`El total a pagar es $ ${ total}`
+    totalTabla.innerText=`El total a pagar es $ ${ total}`
+
 }
 
 function agregarCarrito(id) {
@@ -71,10 +78,11 @@ function agregarCarrito(id) {
                 compra = compra +tablaresumen
             }
             resumen.innerHTML= compra
-        }
+            
+    }
         
 }
-document.addEventListener("click", (e) => {
+galeria.addEventListener("click", (e) => {
     let idProd = e.target.id
     agregarCarrito(idProd);
     totalizar()
