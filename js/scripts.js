@@ -35,7 +35,7 @@ for (let i = 0; i < productos.length; i++) {
 }
 galeria.innerHTML = stringresp
 
-let btnagregar = document.getElementsByClassName ("agregar")
+let btnagregar = document.querySelectorAll (".agregar") //btnagregar es un array con todos los botones "agregar"
 
 const carrito = []
 
@@ -82,12 +82,15 @@ function agregarCarrito(id) {
     }
         
 }
-galeria.addEventListener("click", (e) => {
-    let idProd = e.target.id
-    agregarCarrito(idProd);
-    totalizar()
-    
-})
+
+btnagregar.forEach(element => {
+    element.addEventListener("click", (e) => {
+        let idProd = e.target.id
+        agregarCarrito(idProd);
+        totalizar()
+        
+    })
+});
 
 
 
