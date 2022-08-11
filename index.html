@@ -37,8 +37,9 @@
 
         </div>
 
-        
-        <div class="carrito"> <img src="./img/carrito.png" alt=""></div>
+
+        <div class="carrito">
+          <a id="btnCarrito" href=""><img src="./img/carrito.png" alt=""></a> <span id="contadorCarrito">0</span></div>
       </div>
     </nav>
   </div>
@@ -47,30 +48,35 @@
   <main id="cuerpo">
     <section id="productos">
 
-      
-      
+      <!-- <button class="btn-eliminar"> <img src="./img/eliminarIcon.png" alt=""></button> -->
+
     </section>
-    <section class="resumen" >
+    <section class="resumen">
       <table class="table">
         <thead>
-        <tr>
+          <tr>
             <th scope="col">Cantidad</th>
             <th scope="col">Producto</th>
             <th scope="col"></th>
             <th scope="col">Precio</th>
-            
-        </tr>
+
+          </tr>
         </thead>
         <tbody id="resumencompra">
-        
+
         </tbody>
-        <tfoot >
+        <tfoot>
           <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col"> <p class= total id="total"></p> </th>
+          <th scope="col"></th>
+          <th scope="col">
+            <p class=total id="total"></p>
+          </th>
 
         </tfoot>
-        </table>  
+      </table>
+      <div class="btn">
+        <button id="vaciar">Vaciar Carrito</button>
+      </div>
     </section>
   </main>
   <script src="./js/scripts.js"></script>

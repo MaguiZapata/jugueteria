@@ -21,6 +21,7 @@ productos.push(new Producto("pelota", 2300, 3, "./img/pelotas.jpg"));
 
 let galeria = document.getElementById("productos");
 let stringresp = ""
+//Crea las tarjetas en html segun el contenido del array productos
 for (let i = 0; i < productos.length; i++) {
     const element = productos[i];
     let tarjeta = `<div class="card mb-3">
@@ -31,66 +32,111 @@ for (let i = 0; i < productos.length; i++) {
                     </div>
                     <a href="#" id = "${element.id}" class="btn btn-primary agregar">Agregar al carrito</a>
                     </div>`;
+    //
     stringresp = stringresp + tarjeta
 }
 galeria.innerHTML = stringresp
 
-let btnagregar = document.querySelectorAll (".agregar") //btnagregar es un array con todos los botones "agregar"
-
-const carrito = []
-
-
-
-let totalTabla = document.getElementById("total")
-
-function totalizar() {
-    let total=0
-    for (let index = 0; index < carrito.length; index++) {
-
-        total = total + carrito[index].precio;
-    }
-    totalTabla.innerText=`El total a pagar es $ ${ total}`
-
-}
-
-function agregarCarrito(id) {
-    let productoseleccionado = productos.find(prod => prod.id == id)
-
-    carrito.push(productoseleccionado)
-    alert(`Agregaste ${productoseleccionado.nombre} a tu carrito`)
-
-    if (carrito.length != 0) {
-        
-            let resumen = document.getElementById("resumencompra");
-            let compra = "";
-            for (let i = 0; i < carrito.length; i++) {
-                const element = carrito[i];
-                let tablaresumen = `       
-                                    <tr>
-                                        <th scope="row">1 </th>
-                                        <td>${ element.nombre}</td>
-                                        <td> <img class = "imgtabla" src="${ element.img}" alt=""></td>
-                                        <td>${ element.precio}</td>
-                                    </tr>
-                                    
-                                    `
-                
-                compra = compra +tablaresumen
-            }
-            resumen.innerHTML= compra
-            
-    }
-        
-}
-
+//btnagregar es un array con todos los botones "agregar"
+let btnagregar = document.querySelectorAll(".agregar")
+//para cada elemento del btnagregar dispara un evento con el click en el btn 
 btnagregar.forEach(element => {
     element.addEventListener("click", (e) => {
         let idProd = e.target.id
         agregarCarrito(idProd);
         totalizar()
-        
+
     })
 });
+
+let carrito = []
+//traigo del localstorage el contenido de carritoGuadado y le asigno una variable
+let carritoGuardado = JSON.parse(localStorage.getItem("carritoGuardado"));
+// si el carritoGuardado está definido, entonces lo copia en el array carrito, si no, no hace nada
+if (carritoGuardado!= undefined) {
+    carrito = carritoGuardado
+}
+else{
+    null
+}
+const contadorCarrito = document.getElementById("contadorCarrito")
+actualizarTablaCarrito()
+//guarda en el localstorage el carrito
+function guardarCarrito() {
+    localStorage.setItem("carritoGuardado", JSON.stringify(carrito));
+}
+
+//le asigno una variable a un elemento del html
+let totalTabla = document.getElementById("total")
+//suma los valores de todos los productos del carrito
+function totalizar() {
+    let total = 0
+    for (let index = 0; index < carrito.length; index++) {
+
+        total = total + carrito[index].precio;
+    }
+    totalTabla.innerText = `El total a pagar es $ ${ total}`
+
+}
+
+
+function agregarCarrito(id) {
+    let productoseleccionado = productos.find(prod => prod.id == id)
+
+    carrito.push(productoseleccionado)
+    alert(`Agregaste ${productoseleccionado.nombre} a tu carrito`);
+    guardarCarrito()
+    actualizarTablaCarrito();
+    contadorCarrito.innerHTML = carrito.length;
+
+}
+;
+
+
+function actualizarTablaCarrito() {
+    if (carrito.length != 0) {
+
+        let resumen = document.getElementById("resumencompra");
+        let compra = "";
+
+        for (let i = 0; i < carrito.length; i++) {
+            const element = carrito[i];
+            let tablaresumen = `       
+                                        <tr>
+                                            <th scope="row">1 </th>
+                                            <td>${ element.nombre}</td>
+                                            <td> <img class = "imgtabla" src="${ element.img}" alt=""></td>
+                                            <td>${ element.precio}</td>
+                                            
+                                        </tr>
+                                        
+                                        `
+
+            compra = compra + tablaresumen
+        }
+
+        resumen.innerHTML = compra
+
+        
+    }
+
+    contadorCarrito.innerHTML = carrito.length
+
+}
+
+let btnVaciar= document.getElementById("vaciar");
+btnVaciar.addEventListener ("click", (e)=>{
+carrito= [];
+localStorage.removeItem("carritoGuardado");
+actualizarTablaCarrito();
+location.reload()
+})
+
+
+
+
+
+
 
 
 
