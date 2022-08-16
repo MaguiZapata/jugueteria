@@ -28,6 +28,7 @@ h1 {
     margin-bottom: 3%;
     width: 50%;
     margin-left: 24%;
+    font-size: 120%;
 }
 section {
     display: flex;
@@ -42,7 +43,7 @@ section {
     padding-right: 8%;
 }
 .total  {
-    font-size: 150%;
+    font-size: 130%;
     text-align: right;
 }
 .imgtabla{
@@ -51,6 +52,16 @@ section {
 .btn-eliminar{
     border: none;
 } 
-.btn{
+.btn-vaciar{
+background-color: white;
+color: red;
+width: 70%;
+height: 70%;
+font-size: 130%;
+border-radius: 10px;
+border: none;
+}
 
+.texto-tabla{
+    font-size: 150%;
 }

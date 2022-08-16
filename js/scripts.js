@@ -53,12 +53,9 @@ let carrito = []
 //traigo del localstorage el contenido de carritoGuadado y le asigno una variable
 let carritoGuardado = JSON.parse(localStorage.getItem("carritoGuardado"));
 // si el carritoGuardado está definido, entonces lo copia en el array carrito, si no, no hace nada
-if (carritoGuardado!= undefined) {
-    carrito = carritoGuardado
-}
-else{
-    null
-}
+
+//Aplico operador ternario
+carritoGuardado!=undefined? carrito=carritoGuardado : null
 const contadorCarrito = document.getElementById("contadorCarrito")
 actualizarTablaCarrito()
 //guarda en el localstorage el carrito
@@ -103,10 +100,10 @@ function actualizarTablaCarrito() {
             const element = carrito[i];
             let tablaresumen = `       
                                         <tr>
-                                            <th scope="row">1 </th>
-                                            <td>${ element.nombre}</td>
+                                            <th class="texto-tabla" scope="row">1 </th>
+                                            <td class="texto-tabla">${ element.nombre}</td>
                                             <td> <img class = "imgtabla" src="${ element.img}" alt=""></td>
-                                            <td>${ element.precio}</td>
+                                            <td class="texto-tabla">${ element.precio}</td>
                                             
                                         </tr>
                                         
@@ -152,76 +149,3 @@ location.reload()
 
 
 
-/* 
-
-
-
-
-
-
-function seguircomprando() {
-    let confirmacion = prompt("Qué desea hacer: \n1- Seguir comprando \n 2- Finalizar compra")
-    if (confirmacion == "1") {
-        seleccionprod()
-
-
-    } else if (confirmacion == "2") {
-       
-        ;
-
-        let cuerpo = document.getElementById("cuerpo")
-
-        cuerpo.innerHTML = `<h2>El total a pagar es $  ${ total}. Muchas gracias por su compra</h2>`
-
-    } else {
-
-        do {
-            alert("Ingreso incorrecto");
-            confirmacion = prompt("Qué desea hacer: \n1- Seguir comprando? \n 2- Finalizar compra \n 3- Abandonar compra");
-            if (confirmacion == "1") {
-                seleccionprod();
-            } else if (confirmacion == "2") {
-               
-                cuerpo.innerHTML = `<h2>El total a pagar es $  ${ total}. Muchas gracias por su compra</h2>`
-
-            }
-
-
-        } while (confirmacion != "1" && confirmacion != "2");
-    }
-}
-
-function infoCompra(id) {
-    let prod = productos.find(item => item.id === id);
-    alert("El precio de " + prod.nombre + " con descuento es de $ " + prod.conDescuento());
-    agregarCarrito(prod);
-    totalizar()
-    seguircomprando()
-}
-
-function seleccionprod() {
-    let compra = prompt("Qué productos vas a llevar? \n 0- Juego de Encastre \n 1- Muñeca Super Cute \n 2- Auto Paw Patrol \n 3- Pelota infantil");
-
-    switch (compra) {
-        case "0":
-            infoCompra(0)
-
-            break;
-        case "1":
-            infoCompra(1)
-            break;
-        case "2":
-            infoCompra(2)
-            break;
-        case "3":
-            infoCompra(3)
-            break;
-        default:
-            cuerpo.innerHTML = `<h2>No elegiste ningún producto. Actualizá la página para volver a intentarlo.</h2>`
-
-            break;
-    }
-
-}
-
-seleccionprod() */
