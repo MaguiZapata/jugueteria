@@ -5,7 +5,7 @@
     font-family: 'Bangers', cursive ;
 }
 h1 {
-    font-size: 200px;
+    font-size: 180px;
     padding-top: 2%;
 }
 .titulo{
@@ -41,6 +41,8 @@ section {
 .resumen {
     padding-left: 40%;
     padding-right: 8%;
+    display: block;
+    padding-bottom: 30px;
 }
 .total  {
     font-size: 130%;
@@ -53,13 +55,14 @@ section {
     border: none;
 } 
 .btn-vaciar{
-background-color: white;
-color: red;
-width: 70%;
-height: 70%;
+background-color: red;
+color: white;
+width: 20%;
+height: 200%;
 font-size: 130%;
 border-radius: 10px;
 border: none;
+
 }
 
 .texto-tabla{

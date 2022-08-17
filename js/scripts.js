@@ -81,14 +81,26 @@ function agregarCarrito(id) {
     let productoseleccionado = productos.find(prod => prod.id == id)
 
     carrito.push(productoseleccionado)
-    alert(`Agregaste ${productoseleccionado.nombre} a tu carrito`);
+    Toastify({
+        text: `Agregaste ${productoseleccionado.nombre} al carrito`,
+        duration: 2000,
+
+        close: true,
+        gravity: "top",
+        position: "right",
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+            width: "15vw",
+
+        },
+        onClick: function () {} // Callback after click
+    }).showToast();
+
     guardarCarrito()
     actualizarTablaCarrito();
     contadorCarrito.innerHTML = carrito.length;
 
-}
-;
-
+};
 
 function actualizarTablaCarrito() {
     if (carrito.length != 0) {
@@ -123,12 +135,27 @@ function actualizarTablaCarrito() {
 
 let btnVaciar= document.getElementById("vaciar");
 btnVaciar.addEventListener ("click", (e)=>{
-carrito= [];
-localStorage.removeItem("carritoGuardado");
-actualizarTablaCarrito();
-location.reload()
-})
+    Swal.fire({
+        title: 'Seguro que desea vaciar el carrito?',
+        showDenyButton: true,
+        
+        confirmButtonText: 'Si',
+        denyButtonText: `Cancelar`,
+    }).then((result) => {
 
+        if (result.isConfirmed) {
+            carrito = [];
+            localStorage.removeItem("carritoGuardado");
+            actualizarTablaCarrito();
+            location.reload()
+            Swal.fire('Vaciaste tu carrito', '', 'success')
+        } else if (result.isDenied) {
+           
+        }
+    })
+
+
+})
 
 
 
