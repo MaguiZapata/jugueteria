@@ -1,0 +1,21 @@
+[{
+    "marca": "Fisher Price",
+    "id":"1",
+    "img": "./img/fp.jpg"
+    
+},
+{
+    "marca": "Lego",
+    "id":"2",
+    "img": "./img/lego.png"
+},
+{
+    "marca": "Duravit",
+    "id":"3",
+    "img": "./img/duravit.jpg"
+},
+{
+    "marca": "Ditoys",
+    "id":"4",
+    "img": "./img/ditoys.png"
+}]

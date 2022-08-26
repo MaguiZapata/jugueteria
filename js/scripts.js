@@ -157,7 +157,48 @@ btnVaciar.addEventListener ("click", (e)=>{
 
 })
 
+async function crearModal() {
+    
+    let btnMarcas = document.getElementById("btn-marcas");
+    btnMarcas.innerHTML= "";
+    const respuesta= fetch ("./js/data.json");
+    const info = (await respuesta).json()
+    btnMarcas.addEventListener("click", (e)=>{
+        Swal.fire({
+            title: 'Fisher Price',
+            imageUrl: './img/fp.jpg',
+            imageWidth: 400,
+            imageHeight: 200,
+            imageAlt: 'Fisher Price',
+          });
+          Swal.fire({
+            title: 'Lego',
+            imageUrl: './img/lego.png',
+            imageWidth: 400,
+            imageHeight: 200,
+            imageAlt: 'Lego',
+          });
+          Swal.fire({
+            title: 'Duravit',
+            imageUrl: './img/duravit.jpg',
+            imageWidth: 400,
+            imageHeight: 200,
+            imageAlt: 'Duravit',
+          });
+          Swal.fire({
+            title: 'Duravit',
+            imageUrl: './img/duravit.jpg',
+            imageWidth: 400,
+            imageHeight: 200,
+            imageAlt: 'Duravit',
+          });
+    btnMarcas.innerHTML = btnMarcas
+    }
+    )
+}
 
+fetch 
+then((respuesta))
 
 
 
