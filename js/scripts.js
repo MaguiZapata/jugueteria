@@ -147,7 +147,6 @@ function actualizarTablaCarrito() {
                     carrito = [];
                     localStorage.removeItem("carritoGuardado");
                     actualizarTablaCarrito();
-                    location.reload()
                     Swal.fire('Vaciaste tu carrito', '', 'success')
                 } else if (result.isDenied) {
         
