@@ -55,7 +55,8 @@ let carritoGuardado = JSON.parse(localStorage.getItem("carritoGuardado"));
 // si el carritoGuardado está definido, entonces lo copia en el array carrito, si no, no hace nada
 
 //Aplico operador ternario
-carritoGuardado!=undefined? carrito=carritoGuardado : null
+carritoGuardado != undefined ? carrito = carritoGuardado : null
+
 const contadorCarrito = document.getElementById("contadorCarrito")
 actualizarTablaCarrito()
 //guarda en el localstorage el carrito
@@ -70,7 +71,7 @@ function totalizar() {
     let total = 0
     for (let index = 0; index < carrito.length; index++) {
 
-        total = total + carrito[index].precio;
+        total = total + carrito[index].precio * carrito[index].cantidad;
     }
     totalTabla.innerText = `El total a pagar es $ ${ total}`
 
@@ -79,22 +80,29 @@ function totalizar() {
 
 function agregarCarrito(id) {
     let productoseleccionado = productos.find(prod => prod.id == id)
+    if (productoseleccionado.cantidad === undefined) {
+        productoseleccionado.cantidad = 1
+        carrito.push(productoseleccionado)
+    } else {
+        ++productoseleccionado.cantidad
+    }
 
-    carrito.push(productoseleccionado)
-    Toastify({
-        text: `Agregaste ${productoseleccionado.nombre} al carrito`,
-        duration: 2000,
 
-        close: true,
-        gravity: "top",
-        position: "right",
-        stopOnFocus: true, // Prevents dismissing of toast on hover
-        style: {
-            width: "15vw",
 
-        },
-        onClick: function () {} // Callback after click
-    }).showToast();
+        Toastify({
+            text: `Agregaste ${productoseleccionado.nombre} al carrito`,
+            duration: 2000,
+
+            close: true,
+            gravity: "top",
+            position: "right",
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            style: {
+                width: "15vw",
+
+            },
+            onClick: function () {} // Callback after click
+        }).showToast();
 
     guardarCarrito()
     actualizarTablaCarrito();
@@ -111,12 +119,12 @@ function actualizarTablaCarrito() {
         for (let i = 0; i < carrito.length; i++) {
             const element = carrito[i];
             let tablaresumen = `       
-                                        <tr>
-                                            <th class="texto-tabla" scope="row">1 </th>
+                                        <tr id= "${element.id}">
+                                            <th class="texto-tabla" scope="row">${element.cantidad} </th>
                                             <td class="texto-tabla">${ element.nombre}</td>
                                             <td> <img class = "imgtabla" src="${ element.img}" alt=""></td>
-                                            <td class="texto-tabla">${ element.precio}</td>
-                                            
+                                            <td class="texto-tabla">${ element.precio * element.cantidad}</td>
+                                            <td class="btn-eliminar" id="eliminar-prod"> <img src="./img/eliminarIcon.png"alt=""></td>
                                         </tr>
                                         
                                         `
@@ -125,95 +133,111 @@ function actualizarTablaCarrito() {
         }
 
         resumen.innerHTML = compra
-
+        let btnVaciar = document.getElementById("vaciar");
+        btnVaciar.addEventListener("click", (e) => {
+            Swal.fire({
+                title: 'Seguro que desea vaciar el carrito?',
+                showDenyButton: true,
         
-    }
+                confirmButtonText: 'Si',
+                denyButtonText: `Cancelar`,
+            }).then((result) => {
+        
+                if (result.isConfirmed) {
+                    carrito = [];
+                    localStorage.removeItem("carritoGuardado");
+                    actualizarTablaCarrito();
+                    location.reload()
+                    Swal.fire('Vaciaste tu carrito', '', 'success')
+                } else if (result.isDenied) {
+        
+                }
+            })
+        
+        
+        })
+
+    }else{
+        let resumen = document.getElementById("resumencompra");
+        resumen.innerHTML=`<tr  style="color: red;"> No hay productos en el carrito </tr>`
+        let btnVaciar = document.getElementById("vaciar");
+
+        btnVaciar.addEventListener("click", (e) => {
+        Swal.fire(
+            'No hay productos para eliminar',
+            '',
+            'error'
+        )})
+    } 
 
     contadorCarrito.innerHTML = carrito.length
+    //let eliminarProdBtns= document.getElementsByClassName("btn-eliminar");
+    let eliminarProdBtns = document.querySelectorAll(".btn-eliminar")
+    eliminarProdBtns.forEach(element => {
+            element.addEventListener("click", (e) => {
+                let idProd = e.target.parentElement.parentElement.id
+                eliminarItem(idProd);
+                guardarCarrito()
+                actualizarTablaCarrito()
+                totalizar()
+
+            })
+        }
+
+    )
 
 }
 
-let btnVaciar= document.getElementById("vaciar");
-btnVaciar.addEventListener ("click", (e)=>{
-    Swal.fire({
-        title: 'Seguro que desea vaciar el carrito?',
-        showDenyButton: true,
-        
-        confirmButtonText: 'Si',
-        denyButtonText: `Cancelar`,
-    }).then((result) => {
 
-        if (result.isConfirmed) {
-            carrito = [];
-            localStorage.removeItem("carritoGuardado");
-            actualizarTablaCarrito();
-            location.reload()
-            Swal.fire('Vaciaste tu carrito', '', 'success')
-        } else if (result.isDenied) {
-           
+function eliminarItem(id) {
+    if (carrito.length > 1) {
+        let prodABorrarIndex = carrito.findIndex(producto => producto.id == id)
+        carrito.splice(prodABorrarIndex, 1)
+    } else {
+        carrito = []
+        document.getElementById('resumencompra').innerHTML = ''
+    }
+    actualizarTablaCarrito()
+
+}
+
+
+async function crearModal() {
+
+    let btnMarcas = document.getElementById("btn-marcas");
+    let info = []
+    const respuesta = await fetch("./js/data.json")
+        .then(res => res.json())
+        .then(data => {
+            info = [...data]
+        })
+
+
+
+    btnMarcas.addEventListener("click", (e) => {
+        let modal = document.getElementById("modal-marcas");
+        let tarjetas = "";
+        for (let i = 0; i < info.length; i++) {
+            let element = info[i];
+            let tarjeta = `
+                        <div class="card card-marcas" style="width: 18rem;">
+                            <img src= ${element.img} class="card-img-top img-tarjetas" alt="...">
+                            <div class="card-body">
+                            </div>
+                        </div> `
+            tarjetas += tarjeta
+
+        }
+        tarjetas += `<div class="btb-cerrar"> <div class="boton-cerrar"> <button type="button" class="btn btn-primary btn-cerrar-modal" id= "cerrar-modal">X</button></div> </div> `
+        modal.innerHTML = tarjetas
+        modal.style.visibility = "visible";
+
+        let btnCerrarModal = document.getElementById("cerrar-modal");
+        btnCerrarModal.onclick = function () {
+            modal.style.visibility = "hidden"
         }
     })
 
 
-})
-
-async function crearModal() {
-    
-    let btnMarcas = document.getElementById("btn-marcas");
-    btnMarcas.innerHTML= "";
-    const respuesta= fetch ("./js/data.json");
-    const info = (await respuesta).json()
-    btnMarcas.addEventListener("click", (e)=>{
-        Swal.fire({
-            title: 'Fisher Price',
-            imageUrl: './img/fp.jpg',
-            imageWidth: 400,
-            imageHeight: 200,
-            imageAlt: 'Fisher Price',
-          });
-          Swal.fire({
-            title: 'Lego',
-            imageUrl: './img/lego.png',
-            imageWidth: 400,
-            imageHeight: 200,
-            imageAlt: 'Lego',
-          });
-          Swal.fire({
-            title: 'Duravit',
-            imageUrl: './img/duravit.jpg',
-            imageWidth: 400,
-            imageHeight: 200,
-            imageAlt: 'Duravit',
-          });
-          Swal.fire({
-            title: 'Duravit',
-            imageUrl: './img/duravit.jpg',
-            imageWidth: 400,
-            imageHeight: 200,
-            imageAlt: 'Duravit',
-          });
-    btnMarcas.innerHTML = btnMarcas
-    }
-    )
 }
-
-fetch 
-then((respuesta))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+crearModal()

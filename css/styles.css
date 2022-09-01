@@ -1,28 +1,41 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Bangers', cursive ;
+    font-family: 'Bangers', cursive;
 }
+
 h1 {
     font-size: 180px;
     padding-top: 2%;
 }
-.titulo{
+
+.titulo {
     text-align: center;
 }
-.barra_nav{
+
+.barra_nav {
     padding-left: 10%;
     padding-right: 10%;
     font-size: 210%;
     color: red;
     padding-bottom: 2%;
 }
+h5 {
+font-size: 150%;
+text-align: center;
+}
+
 .card-img-top {
     width: 100%;
 }
+
 .card {
     width: 20%;
+    
+}
+.card-marcas{
+display: block;
 }
 .btn {
     margin-bottom: 3%;
@@ -30,45 +43,87 @@ h1 {
     margin-left: 24%;
     font-size: 120%;
 }
+
 section {
     display: flex;
     flex-direction: row;
     gap: 2%;
-    
+
     justify-content: center;
 
 }
+
 .resumen {
     padding-left: 40%;
     padding-right: 8%;
     display: block;
     padding-bottom: 30px;
 }
-.total  {
+
+.total {
     font-size: 130%;
     text-align: right;
 }
-.imgtabla{
-    width: 50px;
+
+.imgtabla {
+    width: 100px;
 }
-.btn-eliminar{
+
+.btn-eliminar {
     border: none;
-} 
-.btn-vaciar{
-background-color: red;
-color: white;
-width: 20%;
-height: 200%;
-font-size: 130%;
-border-radius: 10px;
-border: none;
+}
+
+.btn-vaciar {
+    background-color: red;
+    color: white;
+    width: 20%;
+    height: 200%;
+    font-size: 130%;
+    border-radius: 10px;
+    border: none;
 
 }
 
-.texto-tabla{
+.texto-tabla {
     font-size: 150%;
 }
-/* .btn-marcas{
+
+.marcas {
+    position: relative;
+    display: flex;
+}
+.btn-marcas{
+    width: 25%;
+}
+
+.img-tarjetas {
+    width: 50%;
+    padding-left: 10%;
+}
+
+.modal-marcas {
+    visibility: hidden;
+    display: flex;
     border-radius: 3px;
-    width: 50px;
-} */
+    border: solid rgba(176, 176, 176, 0.645);
+    width: 70%;
+    margin-left: 15%;
+    padding-left: 5%;
+    position: absolute;
+    bottom: 466%;
+    background-color: white;
+}
+
+.card {
+    border: none;
+    padding-top: 3%;
+}
+
+.btn-cerrar-modal {
+    width: 30px;
+    display: block;
+
+}
+.btn-cerrar{
+    display: block;
+}
