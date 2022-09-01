@@ -147,7 +147,9 @@ function actualizarTablaCarrito() {
                     carrito = [];
                     localStorage.removeItem("carritoGuardado");
                     actualizarTablaCarrito();
+                    totalizar()
                     Swal.fire('Vaciaste tu carrito', '', 'success')
+                    window.location.reload()
                 } else if (result.isDenied) {
         
                 }
