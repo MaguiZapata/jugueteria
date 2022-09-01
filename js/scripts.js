@@ -14,7 +14,7 @@ class Producto {
 }
 
 const productos = [];
-productos.push(new Producto("encastre_coco", 1000, 0, "./img/encastre_coco.webp"));
+productos.push(new Producto("encastre_coco", 1000, 0, "./img/encastre_coco2.jpg"));
 productos.push(new Producto("munieca", 8500, 1, "./img/munieca.jpg"));
 productos.push(new Producto("auto_pp", 6500, 2, "./img/auto_ppatrol.jpg"));
 productos.push(new Producto("pelota", 2300, 3, "./img/pelotas.jpg"));
